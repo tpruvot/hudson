@@ -8,32 +8,27 @@ function check_result {
   fi
 }
 
-if [ -z "$WORKSPACE" ]
-then
+if [ -z "$WORKSPACE" ]; then
   echo WORKSPACE not specified
   exit 1
 fi
 
-if [ -z "$CLEAN_TYPE" ]
-then
+if [ -z "$CLEAN_TYPE" ]; then
   echo CLEAN_TYPE not specified
   exit 1
 fi
 
-if [ -z "$REPO_BRANCH" ]
-then
+if [ -z "$REPO_BRANCH" ]; then
   echo REPO_BRANCH not specified
   exit 1
 fi
 
-if [ -z "$LUNCH" ]
-then
+if [ -z "$LUNCH" ]; then
   echo LUNCH not specified
   exit 1
 fi
 
-if [ -z "$RELEASE_TYPE" ]
-then
+if [ -z "$RELEASE_TYPE" ]; then
   echo RELEASE_TYPE not specified
   exit 1
 fi
@@ -65,6 +60,7 @@ fi
 git config --global user.name $(whoami)@$NODE_NAME
 git config --global user.email jenkins@cyanogenmod.com
 
+cd $WORKSPACE
 if [ ! -d $REPO_BRANCH ]
 then
   mkdir $REPO_BRANCH
@@ -89,17 +85,22 @@ then
   . ~/.jenkins_profile
 fi
 
-cp $WORKSPACE/hudson/$REPO_BRANCH.xml .repo/local_manifest.xml
+HUDSON_DIR=$WORKSPACE/hudson
+cp $HUDSON_DIR/$REPO_BRANCH.xml $WORKSPACE/.repo/local_manifest.xml
 
 echo Syncing...
 repo sync -d > /dev/null 2> /dev/null
 check_result repo sync failed.
 echo Sync complete.
 
-if [ -f $WORKSPACE/hudson/$REPO_BRANCH-setup.sh ]
+cd $WORKSPACE
+if [ -f $HUDSON_DIR/$REPO_BRANCH-setup.sh ]
 then
-  $WORKSPACE/hudson/$REPO_BRANCH-setup.sh
+  $HUDSON_DIR/$REPO_BRANCH-setup.sh
 fi
+
+cd $WORKSPACE
+echo "We are ready to build in $WORKSPACE"
 
 . build/envsetup.sh
 lunch $LUNCH
@@ -108,7 +109,6 @@ check_result lunch failed.
 rm -f $OUT/update*.zip*
 
 UNAME=$(uname)
-
 if [ "$RELEASE_TYPE" = "CM_NIGHTLY" ]
 then
   if [ "$REPO_BRANCH" = "gingerbread" ]
@@ -122,6 +122,7 @@ then
   export CM_SNAPSHOT=true
 elif [ "$RELEASE_TYPE" = "CM_RELEASE" ]
 then
+  export CYANOGEN_RELEASE=true
   export CM_RELEASE=true
 fi
 
