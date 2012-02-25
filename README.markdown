@@ -30,6 +30,6 @@ https://github.com/CyanogenMod/hudson/blob/master/authorized_keys
 The job uses the following script:
 
 ```bash
-curl -O https://raw.github.com/CyanogenMod/hudson/master/job.sh
+curl -s -S -O https://raw.github.com/CyanogenMod/hudson/master/job.sh
 . ./job.sh
 ```

@@ -53,7 +53,7 @@ REPO=$(which repo)
 if [ -z "$REPO" ]
 then
   mkdir -p ~/bin
-  curl https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ~/bin/repo
+  curl -s -S https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ~/bin/repo
   chmod a+x ~/bin/repo
 fi
 
@@ -89,7 +89,7 @@ HUDSON_DIR=$WORKSPACE/hudson
 cp $HUDSON_DIR/$REPO_BRANCH.xml $WORKSPACE/.repo/local_manifest.xml
 
 echo Syncing...
-repo sync -d > /dev/null 2> /dev/null
+repo sync -d -f 2>$WORKSPACE/reposync.log
 check_result repo sync failed.
 echo Sync complete.
 
