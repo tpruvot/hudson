@@ -134,14 +134,16 @@ make $CLEAN_TYPE
 mka bacon recoveryzip recoveryimage checkapi
 check_result Build failed.
 
-cp $OUT/update*.zip* $WORKSPACE/archive
-if [ -f $OUT/utilties/update.zip ]
+# Files to keep
+mkdir -p $WORKSPACE/archive
+cp $OUT/update*.zip* $WORKSPACE/archive/
+if [ -f $OUT/utilities/update.zip ]
 then
-  cp $OUT/utilties/update.zip $WORKSPACE/archive/recovery.zip
+  cp $OUT/utilities/update.zip $WORKSPACE/archive/recovery.zip
 fi
 if [ -f $OUT/recovery.img ]
 then
-  cp $OUT/recovery.img $WORKSPACE/archive
+  cp $OUT/recovery.img $WORKSPACE/archive/
 fi
 
 # archive the build.prop as well
