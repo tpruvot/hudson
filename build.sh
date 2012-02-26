@@ -70,11 +70,10 @@ then
     cp -R $BOOTSTRAP/.repo $REPO_BRANCH
   fi
   cd $REPO_BRANCH
-  repo init -u git://github.com/CyanogenMod/android.git -b $REPO_BRANCH
+  repo init -u git://github.com/CyanogenDefy/android.git -b $REPO_BRANCH
 else
   cd $REPO_BRANCH
-  # temp hack for turl
-  repo init -u git://github.com/CyanogenMod/android.git -b $REPO_BRANCH
+  repo init -u git://github.com/CyanogenDefy/android.git -b $REPO_BRANCH
 fi
 
 # make sure ccache is in PATH
@@ -111,12 +110,8 @@ rm -f $OUT/update*.zip*
 UNAME=$(uname)
 if [ "$RELEASE_TYPE" = "CM_NIGHTLY" ]
 then
-  if [ "$REPO_BRANCH" = "gingerbread" ]
-  then
-    export CYANOGEN_NIGHTLY=true
-  else
-    export CM_NIGHTLY=true
-  fi
+  export CYANOGEN_NIGHTLY=true
+  export CM_NIGHTLY=true
 elif [ "$RELEASE_TYPE" = "CM_SNAPSHOT" ]
 then
   export CM_SNAPSHOT=true
