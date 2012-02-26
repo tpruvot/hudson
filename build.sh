@@ -88,7 +88,7 @@ HUDSON_DIR=$WORKSPACE/hudson
 cp $HUDSON_DIR/$REPO_BRANCH.xml $WORKSPACE/.repo/local_manifest.xml
 
 echo Syncing...
-repo sync -d -f 2>$WORKSPACE/reposync.log
+repo sync -j 1 -f 2>$WORKSPACE/archive/reposync.log
 check_result repo sync failed.
 echo Sync complete.
 
