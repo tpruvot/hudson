@@ -3,7 +3,8 @@
 function check_result {
   if [ "0" -ne "$?" ]
   then
-    echo $1
+    echo $1 step failed !
+    cat $WORKSPACE/archive/reposync.log
     exit 1
   fi
 }
