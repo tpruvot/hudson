@@ -33,7 +33,8 @@ if [ -z "$RELEASE_TYPE" ]; then
   exit 1
 fi
 
-# colorization fix in Jenkins
+# colorization fix in Jenkins (override yellow color)
+export BUILD_WITH_COLORS=0
 export CL_PFX="\"\033[34m\""
 export CL_INS="\"\033[32m\""
 export CL_RST="\"\033[0m\""
@@ -47,18 +48,16 @@ unset BUILD_NUMBER
 export PATH=~/bin:$PATH
 
 export USE_CCACHE=1
-export BUILD_WITH_COLORS=0
 
 REPO=$(which repo)
-if [ -z "$REPO" ]
-then
+if [ -z "$REPO" ]; then
   mkdir -p ~/bin
   curl -s -S https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ~/bin/repo
   chmod a+x ~/bin/repo
 fi
 
-git config --global user.name $(whoami)@$NODE_NAME
-git config --global user.email jenkins@cyanogenmod.com
+# git config --global user.name $(whoami)@$NODE_NAME
+# git config --global user.email jenkins@cyanogenmod.com
 
 # Repo manifest
 if [ -z "$REPO_MANIFEST" ]; then
@@ -66,11 +65,10 @@ if [ -z "$REPO_MANIFEST" ]; then
 fi
 
 cd $WORKSPACE
-if [ ! -d $REPO_BRANCH ]
+if [ ! -d "$REPO_BRANCH" ]
 then
   mkdir $REPO_BRANCH
-  if [ ! -z "$BOOTSTRAP" -a -d "$BOOTSTRAP" ]
-  then
+  if [ ! -z "$BOOTSTRAP" -a -d "$BOOTSTRAP" ]; then
     echo Bootstrapping repo with: $BOOTSTRAP
     cp -R $BOOTSTRAP/.repo $REPO_BRANCH
   fi
