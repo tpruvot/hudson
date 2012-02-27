@@ -34,21 +34,12 @@ if [ -z "$RELEASE_TYPE" ]; then
   exit 1
 fi
 
-# colorization fix in Jenkins (override yellow color)
-export BUILD_WITH_COLORS=0
-export CL_PFX="\"\033[34m\""
-export CL_INS="\"\033[32m\""
-export CL_RST="\"\033[0m\""
-
-cd $WORKSPACE
-rm -rf archive
-mkdir -p archive
+rm -rf $WORKSPACE/archive
+mkdir -p $WORKSPACE/archive
 export BUILD_NO=$BUILD_NUMBER
 unset BUILD_NUMBER
 
 export PATH=~/bin:$PATH
-
-export USE_CCACHE=1
 
 REPO=$(which repo)
 if [ -z "$REPO" ]; then
@@ -102,12 +93,21 @@ then
   $HUDSON_DIR/$REPO_BRANCH-setup.sh
 fi
 
+# colorization fix in Jenkins (override yellow color)
+export BUILD_WITH_COLORS=0
+export CL_PFX="\"\033[34m\""
+export CL_INS="\"\033[32m\""
+export CL_RST="\"\033[0m\""
+export USE_CCACHE=1
+
 cd $WORKSPACE/$REPO_BRANCH
 echo "We are ready to build in $WORKSPACE/$REPO_BRANCH"
 
 . build/envsetup.sh
 lunch $LUNCH
 check_result lunch failed.
+
+export USE_CCACHE=1
 
 rm -f $OUT/update*.zip*
 
