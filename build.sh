@@ -98,8 +98,8 @@ then
   $HUDSON_DIR/$REPO_BRANCH-setup.sh
 fi
 
-cd $WORKSPACE
-echo "We are ready to build in $WORKSPACE"
+cd $WORKSPACE/$REPO_BRANCH
+echo "We are ready to build in $WORKSPACE/$REPO_BRANCH"
 
 . build/envsetup.sh
 lunch $LUNCH
