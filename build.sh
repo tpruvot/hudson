@@ -139,5 +139,5 @@ find $OUT/*.zip* | grep -v ota | xargs rm -f
 cp $OUT/*.zip* $WORKSPACE/archive/
 
 # archive the build.prop as well
-cp $OUT/system/build.prop > $WORKSPACE/archive/build.prop
+cat $OUT/system/build.prop > $WORKSPACE/archive/build.prop
 
