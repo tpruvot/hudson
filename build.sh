@@ -109,8 +109,6 @@ check_result lunch failed.
 
 export USE_CCACHE=1
 
-rm -f $OUT/update*.zip*
-
 UNAME=$(uname)
 if [ "$RELEASE_TYPE" = "CM_NIGHTLY" ]
 then
@@ -130,22 +128,16 @@ then
   ccache -M 5G
 fi
 
+rm -f $OUT/*.zip*
 make $CLEAN_TYPE
-mka bacon recoveryzip recoveryimage checkapi
+
+mka bacon
 check_result Build failed.
 
 # Files to keep
-mkdir -p $WORKSPACE/archive
-cp $OUT/update*.zip* $WORKSPACE/archive/
-if [ -f $OUT/utilities/update.zip ]
-then
-  cp $OUT/utilities/update.zip $WORKSPACE/archive/recovery.zip
-fi
-if [ -f $OUT/recovery.img ]
-then
-  cp $OUT/recovery.img $WORKSPACE/archive/
-fi
+find $OUT/*.zip* | grep -v ota | xargs rm -f
+cp $OUT/*.zip* $WORKSPACE/archive/
 
 # archive the build.prop as well
-ZIP=$(ls $WORKSPACE/archive/update*.zip)
-unzip -c $ZIP system/build.prop > $WORKSPACE/archive/build.prop
+cp $OUT/system/build.prop > $WORKSPACE/archive/build.prop
+
