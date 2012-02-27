@@ -135,7 +135,7 @@ mka bacon
 check_result Build failed.
 
 # Files to keep
-find $OUT/*.zip* | grep -v ota | xargs rm -f
+find $OUT/*.zip* | grep ota | xargs rm -f
 cp $OUT/*.zip* $WORKSPACE/archive/
 
 # archive the build.prop as well
