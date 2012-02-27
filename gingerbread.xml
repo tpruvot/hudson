@@ -9,7 +9,11 @@
   <project name="koush/proprietary_vendor_imgtec" path="vendor/imgtec" />
   <project name="koush/proprietary_vendor_google" path="vendor/google"  revision="gh-pages"/>
   <project name="koush/proprietary_vendor_lge" path="vendor/lge" />
+<!--
+  Already in our repo (No CM buildbot/gerrit possible for ICS on moto devices yet)
+
   <project name="koush/proprietary_vendor_motorola" path="vendor/motorola" />
+ -->
   <project name="koush/proprietary_vendor_nvidia" path="vendor/nvidia" />
   <project name="koush/proprietary_vendor_nxp" path="vendor/nxp" />
   <project name="koush/proprietary_vendor_samsung" path="vendor/samsung" />
